@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audrey Coombe</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #0032ff;
+      overflow: hidden;
+      color: white;
+      margin: 0;
+      height: 100vh;
+      white-space: nowrap;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: normal;
+      margin: 0;
+      text-align: left;
+    }
+
+    a.button {
+      font-size: 24px;
+      background-color: transparent;
+      color: white;
+      text-decoration: none;
+      border: none;
+      font-weight: normal;
+      padding: 0;
+font-style: italic;
+    }
+
+    .button:hover {
+      background-color: transparent;
+    }
+
+    .bouncing-text {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="bouncing-text" id="bouncer">
+    <h1>
+      Audrey Coombe is a video artist<br>
+      based in New York City.
+ <a href="audrey_cv.pdf" class="button" download>Download CV.</a><br>
+    <span class="small">Last updated March 2025.</span>
+    </h1>
+  </div>
+
+  <script>
+    const el = document.getElementById("bouncer");
+
+    let posX = 0;
+    let posY = 0;
+    let directionX = 1;
+    let directionY = 1;
+    const speed = 100; // pixels per second
+
+    function move(timestamp) {
+      if (!move.last) move.last = timestamp;
+      const delta = (timestamp - move.last) / 1000; // seconds
+      move.last = timestamp;
+
+      const dx = speed * delta * directionX;
+      const dy = speed * delta * directionY;
+
+      posX += dx;
+      posY += dy;
+
+      const elWidth = el.offsetWidth;
+      const elHeight = el.offsetHeight;
+      const maxX = window.innerWidth - elWidth;
+      const maxY = window.innerHeight - elHeight;
+
+      if (posX <= 0 || posX >= maxX) {
+        directionX *= -1;
+        posX = Math.max(0, Math.min(posX, maxX));
+      }
+      if (posY <= 0 || posY >= maxY) {
+        directionY *= -1;
+        posY = Math.max(0, Math.min(posY, maxY));
+      }
+
+      el.style.left = posX + "px";
+      el.style.top = posY + "px";
+
+      requestAnimationFrame(move);
+    }
+
+    requestAnimationFrame(move);
+  </script>
+</body>
+</html>
